@@ -2,7 +2,7 @@ import { Vertex } from './vertex';
 
 export class DirectedGraph<S, R> {
 
-    matrix : string[][];
+    matrix : boolean[][];
     index : Vertex<S,R>[];
     size : number;
 
