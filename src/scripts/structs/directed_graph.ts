@@ -1,6 +1,6 @@
 import { Vertex } from './vertex';
 
-export class DirectedGraph<S, R> {
+export class Machine<S, R> {
 
     matrix : boolean[][];
     index : Vertex<S,R>[];
@@ -10,7 +10,6 @@ export class DirectedGraph<S, R> {
         this.matrix = [];
         this.index = [];
         this.size = 0;
-
     }
 
     addVertex(name: string, input: S, output: R) : [Vertex<S, R>, number] {

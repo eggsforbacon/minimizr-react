@@ -1,4 +1,4 @@
-import { DirectedGraph } from "./structs/directed_graph";
+import { Machine } from "./structs/directed_graph";
 
 const STATE_SPLITTER = ',', TRANSITION_SPLITTER = '-'
 
