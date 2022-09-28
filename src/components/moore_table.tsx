@@ -7,6 +7,10 @@ import {
   from "@tanstack/react-table";
   import React from "react";
   
+import "./../scss/4-components/_table.scss";
+import { Button } from './button'
+
+
    export const MooreTable = () => {
     type Input = {
       state: String;
@@ -44,19 +48,16 @@ import {
         id: "state",
         cell: (info) => <i>{info.getValue()}</i>,
         header: () => <span>State</span>,
-        footer: (info) => info.column.id,
       }),
       columnHelper.accessor((row) => row.transition, {
         id: "transition",
         cell: (info) => <i>{info.getValue()}</i>,
         header: () => <span>Transition</span>,
-        footer: (info) => info.column.id,
       }),
       columnHelper.accessor((row) => row.result, {
         id: "result",
         cell: (info) => <i>{info.getValue()}</i>,
         header: () => <span>Result</span>,
-        footer: (info) => info.column.id,
       }),
     ];
   
@@ -69,56 +70,50 @@ import {
         getCoreRowModel: getCoreRowModel(),
       });
     
+
+
+
       return (
-          <div className="p-2">
-          <table>
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <th key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {table.getRowModel().rows.map((row) => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              {table.getFooterGroups().map((footerGroup) => (
-                <tr key={footerGroup.id}>
-                  {footerGroup.headers.map((header) => (
-                    <th key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.footer,
-                            header.getContext()
-                          )}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </tfoot>
-          </table>
-          <div className="h-4" />
+        <div>
+          <div className={"tableWrapper"}>
+            <table className={"tableMoore"}>
+              <thead className={"tableMooreHead"}>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <th key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+              <tbody className={"tableMooreBody"}>
+                {table.getRowModel().rows.map((row) => (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <td key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>     
+            </table>
+          <div/>
         </div>
-      );
+
+        <Button id = ""styleClass={"primary__unselected"} label = {"Añadir fila"} sizeClass = {"medium"}/>
+        <Button id = ""styleClass={"primary__selected"} label = {"Minimizar"} sizeClass = {"medium"}/>
+
+      </div>
+          
+    );
     
   };
   

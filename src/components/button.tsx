@@ -5,7 +5,8 @@ export const Button = (
     {
         styleClass: string, 
         label: string,
-        sizeClass: string
+        sizeClass: string,
+        id : string,
         onClickFunction?: (...args : any) => any,
     }) => {
 
@@ -25,6 +26,6 @@ export const Button = (
         sizeClass = SIZES.some(sz => sz === sizeClass) ? sizeClass : SIZES[1];
 
         return (
-            <button className={`button button__${styleClass} button__${sizeClass}`} onClick={props.onClickFunction}>{label}</button>
+            <button id ={props.id} className={`button button__${styleClass} button__${sizeClass}`} onClick={props.onClickFunction}>{label}</button>
             );
 }
