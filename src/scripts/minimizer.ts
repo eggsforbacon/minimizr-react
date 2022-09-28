@@ -1,4 +1,4 @@
-import { Machine } from "./structs/directed_graph";
+import { Moore } from "./structs/machine";
 
 const STATE_SPLITTER = ',', TRANSITION_SPLITTER = '-'
 

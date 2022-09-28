@@ -1,12 +1,10 @@
-export class Vertex<S, R> {
+export class Vertex<R> {
 
     name: string;
-    input: S;
     output: R;
 
-    constructor(name: string, input: S, output: R) {
+    constructor(name: string, output: R) {
         this.name = name;
-        this.input = input;
         this.output = output;
     }
 
