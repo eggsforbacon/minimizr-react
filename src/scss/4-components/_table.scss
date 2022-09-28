@@ -1,32 +1,32 @@
 @use "./../1-global" as g;
 
-.tableWrapper{
-    display: flex;
-    justify-content: center;
-    
-}
+.table {
 
-.tableMoore{
     padding-left: g.$standardPaddingX;
     padding-right: g.$standardPaddingX;
     padding-top: g.$standardPaddingY;
     padding-bottom: g.$standardPaddingY;
     
     border-radius: g.$cornerRadiusStandard;
+    width: 90%;
 
+    &__wrapper {
+        display: flex;
+        justify-content: center;
+    }
 
-    background-color: g.$bone;
-    margin-top: 10px;
-    
+    &__moore {
+        
+        
+        background-color: g.$bone;
+        margin-top: 10px;
+        
+        &__head {
+            font-size: large;
+            font-weight: bold;
+            stroke: g.$lightGray;
+            stroke-width: 100px;
+            padding: 30px;
+        }
+    }
 }
-
-.tableMooreHead{
-    font-size: large;
-    font-weight: bold;
-    stroke: g.$lightGray;
-    stroke-width: 100px;
-    padding: 30px;
-}
-
-
-

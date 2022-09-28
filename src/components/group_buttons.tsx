@@ -1,19 +1,16 @@
 import { Button } from "./button";
 
+const mooreBtn = document.getElementById("mooreButton");
+const mealyBtn = document.getElementById("mealyButton");
+
 export const GroupButtons = () => {
     
     function switchToMealy(){
-        let mooreBtn = document.getElementById("mooreButton");
-        let mealyBtn = document.getElementById("mealyButton");
-
         mooreBtn?.setAttribute("class", "button button__primary__selected button__medium");
         mealyBtn?.setAttribute("class", "button button__primary__unselected button__medium");
     }
 
     function switchToMoore(){
-        let mooreBtn = document.getElementById("mooreButton");
-        let mealyBtn = document.getElementById("mealyButton");
-
         mooreBtn?.setAttribute("class", "button button__primary__unselected button__medium");
         mealyBtn?.setAttribute("class", "button button__primary__selected button__medium");
     }
