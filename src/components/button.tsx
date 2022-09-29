@@ -1,31 +1,30 @@
 import "./../scss/4-components/_button.scss";
 
 export const Button = (
-    {styleClass, label, sizeClass, ...props }: 
+    props : 
     {
-        styleClass: string, 
         label: string,
         sizeClass: string,
-        id : string,
+        selected?: boolean,
         onClickFunction?: (...args : any) => any,
     }) => {
+        const {label, sizeClass, selected, onClickFunction} = props;
 
+        
         const STYLES: string[] = [
             "primary__unselected",
-            "primary__selected",
-            "transparent"
+            "primary__selected"
         ];
-
+        
         const SIZES : string[] = [
             "small",
             "medium",
             "large",
         ];
 
-        styleClass = STYLES.some(st => st === styleClass) ? styleClass : STYLES[2];
-        sizeClass = SIZES.some(sz => sz === sizeClass) ? sizeClass : SIZES[1];
-
+        const validSizeClass : string = SIZES.some(sz => sz === sizeClass) ? sizeClass : SIZES[1];
         return (
-            <button id ={props.id} className={`button button__${styleClass} button__${sizeClass}`} onClick={props.onClickFunction}>{label}</button>
+            <button className={`button button__${validSizeClass} button__${selected ? STYLES[1] : STYLES[0]}`} 
+            {...(onClickFunction? {onClick: onClickFunction}:{})} {...props}>{label}</button>
             );
 }

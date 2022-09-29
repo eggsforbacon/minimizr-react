@@ -108,8 +108,8 @@ import { Button } from './button'
         <div/>
       </div>
 
-      <Button id = ""styleClass={"primary__unselected"} label = {"Añadir fila"} sizeClass = {"medium"}/>
-      <Button id = ""styleClass={"primary__selected"} label = {"Minimizar"} sizeClass = {"medium"}/>
+      <Button label = {"Añadir fila"} sizeClass = {"medium"}/>
+      <Button label = {"Minimizar"} sizeClass = {"medium"}/>
 
     </div>
         
