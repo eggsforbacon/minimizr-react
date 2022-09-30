@@ -1,24 +1,45 @@
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} 
-from "@tanstack/react-table";
+export const MooreTable = () => {}
+/*
 import React from "react";
 
 import "./../scss/4-components/_table.scss";
 import { Button } from './button'
 
+const EditableCell = (
+  {
+    cell: {value: initialValue} ,
+    row: {index},
+    column: {id},
+  } : 
+  {
+    cell: {value: string}, 
+    row: {index: number}, 
+    column: {id: string}
+  } ) => {
+    const [value, setValue] = React.useState(initialValue);
 
- export const MooreTable = () => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+    }
+
+    React.useEffect(() => {
+      setValue(initialValue);
+    }, [initialValue])
+
+  return <input value = {value} onChange = {onChange}/>
+}
+
+
+ export const MooreTable = (
+  props : {
+    columnNames : string []
+  }
+ ) => {
   type Input = {
     state: String;
     transition: string;
     result: string;
   };
-
-  const columnHelper = createColumnHelper<Input>();
 
   const defaultData: Input[] = [
     { 
@@ -43,76 +64,46 @@ import { Button } from './button'
     },
   ];
 
-  const columns = [
-    columnHelper.accessor((row) => row.state, {
-      id: "state",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: () => <span>State</span>,
-    }),
-    columnHelper.accessor((row) => row.transition, {
-      id: "transition",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: () => <span>Transition</span>,
-    }),
-    columnHelper.accessor((row) => row.result, {
-      id: "result",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: () => <span>Result</span>,
-    }),
-  ];
+
+  
+  const columns = React.useMemo(
+    () => [
+      {
+        Header : props.columnNames[0],
+        id : `${props.columnNames[0]}`,
+        accessor : "column1",
+        cell : EditableCell
+      },
+      {
+        Header : props.columnNames[1],
+        id : `${props.columnNames[1]}`,
+        accessor: "column2",
+        cell : EditableCell
+      },
+      {
+        Header : props.columnNames[2],
+        id : `${props.columnNames[2]}`,
+        accessor : "column3",
+        cell : EditableCell
+      }
+    ], [props.columnNames]);
 
     const [data] = React.useState(() => [...defaultData]);
-    //const rerender = React.useReducer(() => ({}), {})[1];
 
+    
     const table = useReactTable({
       data,
       columns,
       getCoreRowModel: getCoreRowModel(),
     });
+    
   
-
-
-
     return (
       <div>
-        <div className={"table__wrapper"}>
-          <table className={"table table__moore"}>
-            <thead className={"table__moore__head"}>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <th key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody className={"tableMooreBody"}>
-              {table.getRowModel().rows.map((row) => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>     
-          </table>
-        <div/>
       </div>
-
-      <Button label = {"Añadir fila"} sizeClass = {"medium"}/>
-      <Button label = {"Minimizar"} sizeClass = {"medium"}/>
-
-    </div>
-        
-  );
+          
+    );
+    
+  };
   
-};
+*/

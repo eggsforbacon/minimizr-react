@@ -1,13 +1,15 @@
 import React from 'react';
 import { NavBar } from './components';
-import { MooreTable } from './components';
+import { Table } from './components'
+//import { MooreTable } from './components';
 
 function App() {
   return (
     <div className="App">
       <NavBar/>
-      <MooreTable/>
+      <Table columnNames={["Estados", "Transiciones", "Resultado"]}/>
     </div>
+    
   );
 }
 
