@@ -56,4 +56,8 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.table_layout {
+  border: 1px solid magenta;
+}
+
 /*# sourceMappingURL=styles.css.map */

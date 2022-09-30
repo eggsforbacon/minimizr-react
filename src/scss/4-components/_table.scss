@@ -12,13 +12,15 @@
     
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-
+    
+    
     &__wrapper {
+        display: flex;
+        align-items: center;
         justify-content: center;
         background-color: g.$bone;
-        max-width: 70%;
     }
-
+    
     &__head {
         font-size: large;
         font-weight: bold;
@@ -26,29 +28,45 @@
         stroke-width: 100px;
         padding: 30px;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 90%;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 100%;
+    }
+
+    &__header {
+        justify-self: center;
     }
 
     &__input{
         border-radius: g.$cornerRadiusStandard;
-        border-color: g.$lightGray;
+        border: 0.125rem solid g.$lightGray;
+        height: 1.25rem;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        margin-bottom: 2px;
+        margin-bottom: 12px;
+
+        &:focus {
+            outline-color: g.$bone;
+        }
     }
 
-    &__column1{
-        grid-column: 1;
-    }
+    &__column {
 
-    &__column2{
-        grid-column: 2;
-    }
+        display: flex;
+        flex-direction: column;
+        padding-right: g.$standardPaddingX;
+        padding-left: g.$standardPaddingX;
 
-    &__column3{
-        grid-column: 3;
-    }
+        &1{
+            grid-column: 1;
+        }
 
+        &2{
+            grid-column: 2;
+        }
+        
+        &3{
+            grid-column: 3;
+        }
+    }
 
     &__moore {  
         background-color: g.$bone;
