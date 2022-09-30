@@ -6,7 +6,7 @@ export const Button = (
         label: string,
         sizeClass: string,
         selected?: boolean,
-        onClickFunction?: (...args : any) => any,
+        onClickFunction: (...args : any) => any,
     }) => {
         const {label, sizeClass, selected, onClickFunction} = props;
 
