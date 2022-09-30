@@ -59,6 +59,19 @@ class Moore<S, R> {
         return this.index.filter(vertex => this.index.indexOf(vertex) in connections);
     }
 
+    traverse(start: number, visited: Vertex<R>[]) : Vertex<R>[] {
+
+        visited.push(this.index[start]);
+
+        let adjacentNodes : Vertex<R>[] = this.next(this.index[start]);
+        this.index.forEach(vertex => {
+            if (adjacentNodes.find(v => v === vertex) && visited.find(v => v === vertex) === undefined)
+            visited = this.traverse(this.index.indexOf(vertex), visited);
+        });
+
+        return visited;
+    }
+
     head() : Vertex<R> {
         return this.index[0];
     }
@@ -128,6 +141,19 @@ class Mealy<S, R> {
         connections = connections.filter(x => typeof x === 'number');
 
         return this.index.filter(vertex => this.index.indexOf(vertex) in connections);
+    }
+
+    traverse(start: number, visited: string[]) : string[] {
+
+        visited.push(this.index[start]);
+
+        let adjacentNodes : string[] = this.next(this.index[start]);
+        this.index.forEach(vertex => {
+            if (adjacentNodes.find(v => v === vertex) && visited.find(v => v === vertex) === undefined)
+            visited = this.traverse(this.index.indexOf(vertex), visited);
+        });
+
+        return visited;
     }
 
     head() : string {
