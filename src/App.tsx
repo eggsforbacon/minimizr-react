@@ -24,7 +24,13 @@ function takeInput(): any []{
 
 function minimize(): void{
   let input = takeInput();
-  console.log(input);
+
+  let machineType = 0
+
+  let machineState = document.getElementsByClassName("buttons__wrapper")[0].children.item(0)
+  machineState?.className == "button button__medium button__primary__selected" ? machineType = 0 : machineType = 1
+  
+  console.log(machineType)
 }
 
 function App() {
