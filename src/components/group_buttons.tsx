@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Button } from "./button";
 
+
+
 export const GroupButtons = () => {
 
     let [mooreActive, setMooreActive] = useState(true);
-    
+
     function switchMachine(){
         setMooreActive(!mooreActive);
+        
     }    
 
     return (

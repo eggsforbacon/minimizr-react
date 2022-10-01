@@ -1,6 +1,6 @@
 import { Table } from "../components";
 
-export const TableLayout = () => {
+export const TableLayout = (props:{id:string}) => {
     return (
         <div className={"table_layout"}>
 
@@ -11,7 +11,7 @@ export const TableLayout = () => {
                 </div>
             </div> */}
 
-            <Table columnNames={["Estados", "Transiciones", "Resultados"]} />
+            <Table id={props.id} columnNames={["Estados", "Transiciones", "Resultados"]} />
         </div>
     );
 }

@@ -5,7 +5,8 @@ import { Row } from './table_row';
 
 export const Table = (
     props : {
-        columnNames : string []
+        columnNames : string [],
+        id: string
     }, 
 
 )=>{
@@ -20,6 +21,8 @@ export const Table = (
         setRows(rows.slice(0,-1))
     }
 
+    
+
     let hc = 0;
     return (
         <section>
@@ -28,7 +31,7 @@ export const Table = (
                     <section className={"columns"}>
                         {props.columnNames.map((columnName)=>{return <h4 className={`columns__header${hc=hc+1}`}>{columnName}</h4>})}
                     </section>
-                    <section className={"columns"}>
+                    <section id = {props.id} className={"columns"}>
                     {rows.map(()=>{
                             return(
                             <Row/>
