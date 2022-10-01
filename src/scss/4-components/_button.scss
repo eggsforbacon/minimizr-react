@@ -31,6 +31,18 @@
         }
     }
 
+    &__danger{
+        &__unselected {
+            background-color: g.$lightGray;
+            color: g.$gray;
+        }
+        
+        &__selected {
+            background-color: g.$danger;
+            color: g.$black;
+        }
+    }
+
     &__transparent {
         background-color: #FFFFFF00;
         border-color: #00000022;

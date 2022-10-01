@@ -3,7 +3,6 @@ import "./../scss/4-components/_table.scss";
 import { Button } from './button';
 import { Row } from './table_row';
 
-const tableBody = document.getElementsByClassName("table__body")[0] as Element;
 export const Table = (
     props : {
         columnNames : string []
@@ -11,30 +10,39 @@ export const Table = (
 
 )=>{
 
-    
+    const [rows, setRows] = React.useState([<Row/>])
+
     function addRow():void{
-        //tableBody.appendChild(row)
-        console.log("sus")
+        setRows(rows.concat(<Row/>))
     }
 
+    function removeRow():void{
+        setRows(rows.slice(0,-1))
+    }
 
+    let hc = 0;
     return (
         <section>
             <div className={"table__wrapper"}>
                 <div className={"table"}>
-                    <section className={"table__head"}>
-                        {props.columnNames.map((columnName)=>{return <h4 className={"table__header"}>{columnName}</h4>})}
+                    <section className={"columns"}>
+                        {props.columnNames.map((columnName)=>{return <h4 className={`columns__header${hc=hc+1}`}>{columnName}</h4>})}
                     </section>
-                    <section className={"table__body"}>
-                        <Row/>
-                        <Row/>
-                        
+                    <section className={"columns"}>
+                    {rows.map(()=>{
+                            return(
+                            <Row/>
+                            )                     
+                        })}
+
                     </section>
                 </div>
             </div>
 
-            <Button label = {"Añadir fila"} sizeClass = {"medium"} onClickFunction={addRow}/>
-
+            <section id="rowButtons">
+                <Button label = {"Añadir fila"} sizeClass = {"medium"} buttonType= {"primary"} selected = {true} onClickFunction={addRow}/>
+                <Button label = {"Eliminar fila"} sizeClass = {"medium"} buttonType= {"danger"} selected = {true} onClickFunction={removeRow}/>
+            </section>
         </section>
     );
 }

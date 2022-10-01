@@ -12,61 +12,86 @@
     
     grid-template-columns: 1fr 1fr 1fr;
 
-    &__body{
-        display: flex;
-        flex-direction: column;
-        
-    }
-
-    &__column{
-        &1{
-            margin-right: 5rem;
-        }
-        &2{
-            margin-right: 5rem;
-        }
-        &3{
-            margin-right: 5rem;
-        }
-    }
+    
 
     &__wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: grid;
         background-color: g.$bone;
     }
     
-    &__head {
-        font-size: large;
-        font-weight: bold;
-        stroke: g.$lightGray;
-        stroke-width: 100px;
-        padding: 30px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 100%;
-    }
 
-    &__header {
-        justify-self: center;
-    }
-
-    input{
-        border-radius: g.$cornerRadiusStandard;
-        border: 0.125rem solid g.$lightGray;
-        height: 1.25rem;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        margin-bottom: 12px;
-
-        &:focus {
-            outline-color: g.$bone;
-        }
-    }
+    
 
     
     &__moore {  
         background-color: g.$bone;
         margin-top: 10px;
     }
+
+
+}
+
+input{
+    border-radius: g.$cornerRadiusStandard;
+    border: 0.125rem solid g.$lightGray;
+    height: 1.25rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin-bottom: 12px;
+
+    &:focus {
+        outline-color: g.$bone;
+    }
+}
+
+.columns{
+    display: grid;
+    &__header{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        &1{
+            grid-column: 1;
+            background-color: yellow;
+        }
+        
+        &2{
+            grid-column: 2;
+            background-color: blue;
+        
+        }
+        &3{
+            grid-column: 3;
+            background-color: red;
+        
+        }
+    }
+
+    &__input{
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+
+        &1{
+            grid-row: 1;
+            background-color: yellow;
+        }
+        
+        &2{
+            grid-row: 2;
+            background-color: blue;
+        
+        }
+        &3{
+            grid-row: 3;
+            background-color: red;
+        
+        }
+    }
+
+    
+}
+
+#rowButtons{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
 }

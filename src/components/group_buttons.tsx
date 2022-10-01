@@ -12,8 +12,8 @@ export const GroupButtons = () => {
     return (
         <div className="buttons">
             <div className="buttons__wrapper">
-                <Button  label={"Moore"} sizeClass={"medium"} onClickFunction = {switchMachine} selected={mooreActive}/>
-                <Button  label={"Mealy"} sizeClass={"medium"} onClickFunction = {switchMachine} selected={!mooreActive}/>
+                <Button  label={"Moore"} sizeClass={"medium"} buttonType = {"primary"} onClickFunction = {switchMachine} selected={mooreActive}/>
+                <Button  label={"Mealy"} sizeClass={"medium"} buttonType = {"primary"} onClickFunction = {switchMachine} selected={!mooreActive}/>
             </div>
         </div>
     );
