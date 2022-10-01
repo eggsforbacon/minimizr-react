@@ -15,8 +15,7 @@ export class Minimizer<S, R> {
     minimize() : Mealy<S, R> | Moore<S, R> {
 
         this.removeUnreachableStates();
-        this.partitionMachine();
-        this.buildEquivalent();
+        this.buildEquivalent(this.partitionMachine());
 
         return this.equivalentMachine;
     }
@@ -34,14 +33,18 @@ export class Minimizer<S, R> {
     partitionMachine() {
         /* Call mealy methods */
         if (this.isMealy) {
-            this.partitionMachineTranstitions();
+            return this.partitionMachineTranstitions();
         } else { /* Call moore methods */
-            this.partitionMachineStates();
+            return this.partitionMachineStates();
         }
     }
 
-    buildEquivalent() {
-
+    buildEquivalent(partitionM : Vertex<R>[][] | string[][]) {
+        if (this.isMealy) {
+            this.buildMealy(partitionM as string[][]);
+        } else {
+            this.buildMoore(partitionM as Vertex<R>[][]);
+        }
     }
 
     /* Moore specific */
@@ -59,27 +62,26 @@ export class Minimizer<S, R> {
         this.equivalentMachine = mooreMachine;
     }
     
-    private partitionMachineStates() {
+    private partitionMachineStates() : Vertex<R>[][] {
         let mooreMachine = (this.machine as Moore<S, R>);
         let index : Vertex<R>[] = mooreMachine.getIndex();
         
-        /* Step 1: Initial Partition */
+        /* Step 1: Initial Partition as MAP */
 
-        let partitions : [Vertex<R>][] = [];
+        let partitions : Vertex<R>[][] = [];
 
         index.forEach(vertex => {
             // No partitions yet
             if (partitions.length === 0) partitions.push([vertex]);
-            // There exists a number of partitions already
-            else {
+            else { // Map isn't empty
 
                 // A partition with matching output exists
 
                 let i : number = 0;
                 for ( ; i < partitions.length; i++) {
-                    const partition = partitions[i];
+                    const partition_pair = partitions[i];
                     
-                    if (partition[0].output === vertex.output) {
+                    if (partition_pair[0] === vertex.output) {
                         partitions[i].push(vertex);
                         i = -1;
                         break;
@@ -92,19 +94,81 @@ export class Minimizer<S, R> {
             }
         });
 
-        /* Step 2: Subsequent partitions */
+        /* Step 2: Subsequent partitions, this took a whole day to figure out */
         
-        let partitionK : [Vertex<R>][] = partitions;
-        let partitionK_1 : [Vertex<R>][] = [];
+        let partitionK :  Vertex<R>[][] = partitions;
+        let partitionK1 :  Vertex<R>[][] = [];
 
-        while (partitionK_1 !== partitionK) {
+        // "Repeat step 2b until Pm = Pm+1 for any int m, and Pm is the final partition"
+        while (partitionK1 !== partitionK) {
             partitionK.forEach(partition => {
-                partition.forEach(vertex => {
-                    let subsequent : Vertex<R>[] = mooreMachine.next(vertex);
-                    
+
+                // This partition will be trimmed from accordingly and will be added to partitionK1 at the end of each partition loop
+                let copyPartition = partition;
+
+                // Initialize new partition in partitionK1 with first member (X) of current partition
+                partitionK1.push([partition[0]]);
+
+                //Get conditions for Y matching X: 
+                // X and Y are in the same partition in partitionK (for 'k' loop)
+                
+                // Successors from X are in the same partition(s) as successors from Y 
+                // (at least one succesor from Y is in each array within succeedingPartitions)
+
+                let succeedingPartitions : Vertex<R>[][] = []; // The partitions where the vertices are expected to be
+                mooreMachine.next(partition[0]).forEach(successor => {
+                    for (let i = 0; i < partitionK.length; i++) {
+                        const partK = partitionK[i];
+                        if (partK.find(x => x === successor)) {
+                            succeedingPartitions.push(partK);
+                            break;
+                        }
+                    }
                 });
+                
+                // Put it all together
+                for(let k = 0; k < partition.length; k++) {
+                    const vertex = partition[k];
+                    let matches : boolean = true;
+
+                    //For each successor
+                    let successors = mooreMachine.next(vertex);
+                    for (let j = 0; j < successors.length; j++) {
+                        const successor = successors[j];
+                        let len =  succeedingPartitions.length;
+                        
+                        //And for each expected partition
+                        for (let i = 0; i < len ; i++) {
+                            const sPart = succeedingPartitions[i];
+                            let found : Vertex<R> | undefined = sPart.find(x => x === successor);
+
+                            // Successor is not in any of the succeeding partitions, create a new one for the vertex
+                            if (i > len - 1 && found === undefined) {
+                                matches = false;
+                                partitionK1.push([vertex]);
+                                break;
+                            } 
+                        }
+
+                        //Check if current vertex was assigned to a different partition. If so, trim it
+                        if (matches === false) {
+                            copyPartition.splice(k);
+                            break;
+                        }
+                    }
+                }
+
+                //Add partition to partitionK1
+                partitionK1.push(copyPartition);
             });
         }
+
+        /* Step 3: Final partition is found, and returned */
+
+        return partitionK1;
+    }
+
+    private buildMoore(partitionM : Vertex<R>[][]) {
 
     }
     
@@ -123,7 +187,13 @@ export class Minimizer<S, R> {
         this.equivalentMachine = mealyMachine;
     }
 
-    private partitionMachineTranstitions() {
+    private partitionMachineTranstitions() : string[][] {
+        
+        return [];
+    }
+
+    
+    private buildMealy(partitionM : string[][]) {
         
     }
     
