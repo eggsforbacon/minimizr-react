@@ -1,6 +1,6 @@
 import "./../scss/4-components/_table.scss";
 
-export const OutputTable = (props:{id : string, states: string [], transitions : string [], results : string []})=> {
+export const OutputTable = (props:{ states: string [], transitions : string [], results : string [] })=> {
     
     let index = -1;
 
@@ -24,12 +24,12 @@ export const OutputTable = (props:{id : string, states: string [], transitions :
 
 
     return(
-        <div id = {props.id} className= {"table"}>
+        <div className= {"table"}>
             {
             props.states.map(state =>{
                 index += 1;
                 return(
-                    <section className= {"output__row"}>
+                    <section className= {"output"}>
                         <h4 className = {"output__column1"}>{state}</h4>
                         <h4 className = {"output__column2"}>{props.transitions[index]}</h4>
                         <h4 className = {"output__column3"}>{props.results[index]}</h4>

@@ -26,12 +26,12 @@ export const InputTable = (
     let hc = 0;
     return (
         <section>
-            <div className={"table__wrapper"}>
-                <div className={"table"}>
-                    <section className={"columns"}>
-                        {props.columnNames.map((columnName)=>{return <h4 className={`columns__header${hc=hc+1}`}>{columnName}</h4>})}
+            <div className= {"table"}>
+                <div className={"table__columns"}>
+                    <section className={"table__columns__header"}>
+                        {props.columnNames.map((columnName)=>{return <h4 className={`table__columns__header${hc=hc+1}`}>{columnName}</h4>})}
                     </section>
-                    <section id = {props.id} className={"columns"}>
+                    <section id = {props.id}>
                     {rows.map(()=>{
                             return(
                             <Row/>
