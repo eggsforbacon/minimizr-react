@@ -1,7 +1,7 @@
-import React from 'react';
-import { NavBar } from './components';
+import { NavBar, OutputTable } from './components';
 import { TableLayout } from './layout';
 import { Button } from './components/button';
+
 
 function takeInput(): any []{
   let inputSections = document.getElementById("input")?.children;
@@ -22,25 +22,26 @@ function takeInput(): any []{
   return inputs;
 }
 
-function minimize(): void{
+function minimize(tables: JSX.Element ): void{
   let input = takeInput();
 
   let machineType = 0
 
   let machineState = document.getElementsByClassName("buttons__wrapper")[0].children.item(0)
   machineState?.className == "button button__medium button__primary__selected" ? machineType = 0 : machineType = 1
-  
-  console.log(machineType)
 }
+
 
 function App() {
   return (
     <div className="App">
-      <NavBar id = {"NavBar"} />
-      <TableLayout id ={"input"}/>
-      <Button label = {"Minimizar"} sizeClass = {"large"} buttonType = {"primary"} selected = {true} onClickFunction = {minimize}/>
-
+      <NavBar/>
+      <div id="inputTable">
+      <TableLayout id = {"input"}/>
+      </div>
+      <Button label = {"Minimizar"} sizeClass = {"large"} buttonType = {"primary"} selected = {true} onClickFunction = {minimize}/> 
     </div>
+    
     
   );
 }

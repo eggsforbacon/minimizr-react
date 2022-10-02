@@ -1,4 +1,4 @@
-import { Table } from "../components";
+import { InputTable } from "../components";
 
 export const TableLayout = (props:{id:string}) => {
     return (
@@ -11,7 +11,7 @@ export const TableLayout = (props:{id:string}) => {
                 </div>
             </div> */}
 
-            <Table id={props.id} columnNames={["Estados", "Transiciones", "Resultados"]} />
+            <InputTable id={props.id} columnNames={["Estados", "Transiciones", "Resultados"]} />
         </div>
     );
 }
