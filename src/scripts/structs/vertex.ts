@@ -8,4 +8,8 @@ export class Vertex<R> {
         this.output = output;
     }
 
+    equals(other: Vertex<R>) : boolean {
+        return this.name === other.name && this.output === other.output;
+    }
+
 }
