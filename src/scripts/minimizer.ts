@@ -52,14 +52,14 @@ export class Minimizer<S, R> {
     private removeUnreachableMoore() {
         let mooreMachine = (this.machine as Moore<S, R>);
         let index : Vertex<R>[] = mooreMachine.getIndex();
-
+        
         let reached: Vertex<R>[] = mooreMachine.traverse(0, []);
         let unreachable: Vertex<R>[] = index.filter(vertex => reached.indexOf(vertex) < 0);
         unreachable.forEach(vertex => {
             mooreMachine.removeVertex(vertex.name);
         });
-
-        this.equivalentMachine = mooreMachine;
+        
+        this.machine = mooreMachine;
     }
     
     private partitionMachineStates() : Vertex<R>[][] {
@@ -67,7 +67,7 @@ export class Minimizer<S, R> {
         let index : Vertex<R>[] = mooreMachine.getIndex();
         
         /* Step 1: Initial Partitions */
-
+        
         let partitions : Vertex<R>[][] = [];
 
         index.forEach(vertex => {
@@ -212,7 +212,49 @@ export class Minimizer<S, R> {
     }
 
     private buildMoore(partitionM : Vertex<R>[][]) {
+        let mooreMachine = (this.machine as Moore<S, R>);
+        let index : Vertex<R>[] = mooreMachine.getIndex();
+        let matrix : S[][][] = mooreMachine.getMatrix();
+        let equivalentMooreMachine = (this.machine as Moore<S, R>);
 
+        //Add vertices
+        let indexedPartitions : number[][] = [];
+        for (let i = 0; i < partitionM.length; i++) {
+            const partition = partitionM[i];
+
+            //Each partition is a new vertex that inherits properties from first vertex of partition
+            let symbolicVertex = partition[0];
+            equivalentMooreMachine.addVertex(symbolicVertex.name, symbolicVertex.output);
+
+            //Get old indices of vertices contained within partition
+            let indexedPartition : number[] = partition.map(v => index.indexOf(v));
+            
+            //Associate those indices to the index of the partition, i.e. the index of the new vertex
+            indexedPartitions.push(indexedPartition);
+        }
+
+        //Add transitions
+
+        //For each (x, y) pair in the old matrix
+        for (let x = 0; x < matrix.length; x++) {
+            const row = matrix[x];
+            for (let y = 0; y < row.length; y++) {
+                const transitions : S[] = row[y];
+                
+                let from : string = "";
+                let to : string =  "";
+                for(let i = 0; i < indexedPartitions.length; i++) {
+                    const indexedPartition = indexedPartitions[i];
+                    if (x in indexedPartition) from = index[x].name;
+                    if (y in indexedPartition) to = index[y].name;
+                    if (x > 0 && y > 0) break;
+                }
+
+                transitions.forEach(input => {
+                    equivalentMooreMachine.addTransition(from, to, input);
+                });
+            }
+        }
     }
     
     /* Mealy specific */
@@ -407,7 +449,49 @@ export class Minimizer<S, R> {
 
     
     private buildMealy(partitionM : string[][]) {
-        
+        let mealyMachine = (this.machine as Mealy<S, R>);
+        let index : string[] = mealyMachine.getIndex();
+        let matrix : [S, R][][][] = mealyMachine.getMatrix();
+        let equivalentMealyMachine = (this.machine as Mealy<S, R>);
+
+        //Add vertices
+        let indexedPartitions : number[][] = [];
+        for (let i = 0; i < partitionM.length; i++) {
+            const partition = partitionM[i];
+
+            //Each partition is a new vertex that inherits the name of the first vertex of partition
+            let symbolicVertex = partition[0];
+            equivalentMealyMachine.addVertex(symbolicVertex);
+
+            //Get old indices of vertices contained within partition
+            let indexedPartition : number[] = partition.map(v => index.indexOf(v));
+            
+            //Associate those indices to the index of the partition, i.e. the index of the new vertex
+            indexedPartitions.push(indexedPartition);
+        }
+
+        //Add transitions
+
+        //For each (x, y) pair in the old matrix
+        for (let x = 0; x < matrix.length; x++) {
+            const row = matrix[x];
+            for (let y = 0; y < row.length; y++) {
+                const transitions : [S, R][] = row[y];
+                
+                let from : string = "";
+                let to : string =  "";
+                for(let i = 0; i < indexedPartitions.length; i++) {
+                    const indexedPartition = indexedPartitions[i];
+                    if (x in indexedPartition) from = index[x];
+                    if (y in indexedPartition) to = index[y];
+                    if (x > 0 && y > 0) break;
+                }
+
+                transitions.forEach(input => {
+                    equivalentMealyMachine.addTransition(from, to, input);
+                });
+            }
+        }
     }
     
 }
