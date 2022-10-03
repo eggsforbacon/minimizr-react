@@ -1,11 +1,13 @@
 @use "./../1-global" as g;
 
 .table {   
-
     margin-top: 1rem;
+    background-color: g.$bone;
+    max-width: max-content;
+    margin-left: auto;
+    margin-right: auto;
 
     &__columns{
-    background-color: g.$tealBlue;
 
     padding-left: g.$standardPaddingX;
     padding-right: g.$standardPaddingX;
@@ -17,6 +19,7 @@
 
     display: grid;
     grid-template-rows: 30px;
+        
         &__header{
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -41,6 +44,29 @@
         }
     
         &__input{
+            gap: 1rem;
+
+            display: flex;
+            justify-content: space-around;
+            padding-top: g.$standardPaddingY;
+
+            &1{
+                align-self: center;
+                grid-column: 1;
+            }
+            
+            &2{
+                align-self: center;
+                grid-column: 2;            
+            }
+
+            &3{
+                align-self: center;
+                grid-column: 3;
+            } 
+        }
+
+        &__output{
             display: flex;
             justify-content: space-around;
             
@@ -80,35 +106,4 @@ input{
     gap: 2rem;
     align-items: center;
     justify-content: center;
-}
-
-.output{
-
-    background-color: g.$tealBlue;
-    border-radius: g.$cornerRadiusStandard;
-
-    padding-left: g.$standardPaddingX;
-    padding-right: g.$standardPaddingX;
-    padding-top: g.$standardPaddingY;
-    padding-bottom: g.$standardPaddingY;
-    
-    border-radius: g.$cornerRadiusStandard;    
-
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-
-    &__column1{
-        grid-column: 1;
-        justify-self: center;
-    }
-
-    &__column2{
-        grid-column: 2;
-        justify-self: center;
-    }
-
-    &__column3{
-        grid-column: 3;
-        justify-self: center;
-    }
 }

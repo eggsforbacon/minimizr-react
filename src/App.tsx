@@ -2,6 +2,8 @@ import { NavBar, OutputTable } from './components';
 import { TableLayout } from './layout';
 import { Button } from './components/button';
 import { Minimize } from './scripts/minimize';
+import React from 'react';
+
 
 
 /* This method takes the input from the input fields in the table. */
@@ -38,26 +40,29 @@ function takeInput(): string[][]{
   return [states, transitions, results];
 }
 
+
+
 function minimize(tables: JSX.Element ): void{
   let input = takeInput();
-
   // 0 if moore, 1 if mealy
-  let machineType = 0;
+  var machineType = 0;
+  
 
   /* The first button change it's className if the user wants a Mealy machine, so we use the Moore button
    as an indicator of the machine that the user wants to minimize */
   let machineState = document.getElementsByClassName("buttons__wrapper")[0].children.item(0)
   machineState?.className == "button button__medium button__primary__selected" ? machineType = 0 : machineType = 1;
-  Minimize.buildAndMinimize(input, machineType);
+  
 }
 
-
 function App() {
+  let columnNames = ["Estados", "Transiciones", "Resultados"];
+  
   return (
     <div className="App">
       <NavBar/>
       <div id="inputTable">
-      <TableLayout id = {"input"}/>
+      <TableLayout id = {"input"} columnNames = {columnNames} />
       </div>
 
       <div style={{display: "flex", justifyContent: "center", marginTop: "2rem"}}>
@@ -65,7 +70,7 @@ function App() {
       </div>
 
       <div id="outputTable">
-        <OutputTable states = {[]} transitions = {[]}  results = {[]}/>
+          <OutputTable columnNames = {columnNames} states = {[]} transitions = {[]}  results = {[]}/>
       </div>
     </div>
     
