@@ -1,46 +1,45 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Minimizr
+Este minimizador de autómatas finitos de Moore y Mealy fue desarrollado utilizando react, typescript y scss.
+## Guía de uso
+Recomendaciones a tener en cuenta para que el proyecto funcione como se espera
 
-## Available Scripts
+### Sobre la ejecución del proyecto
+Por ser un proyecto desarrollado con React, se debe contar con una versión de Node superior a la 16.11
+Adicionalmente se recomienda instalar sass para el correcto funcionamiento del proyecto
 
-In the project directory, you can run:
+El proyecto debe ser ejecutado mediante el comando 
+```npm start ```
+, además, se deben instalar las librerias utilizadas durante el desarrollo del mismo mediante el comando 
+```npm install ```
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Sobre los formatos de los datos
+#### Autómatas de Moore
+* Las celdas de la columna 'Estados' debe tener una cadena que represente al estado, separada por una coma ',' y después de esta la salida del estado
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* Las celdas de la columna 'Transiciones' necesitan dos cadenas separadas por una flecha '-->', del lado izquierdo se encuentra la entrada, y del lado derecho de la flecha se debe poner el estado al cual conduce
 
-### `npm test`
+* Las celdas de la columna 'Resultados' representan las salidas del estado al que se llega al terminar la transición
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Autómatas de Mealy
+* Las celdas de la columna 'Estados' debe tener una cadena que represente al estado
 
-### `npm run build`
+* Las celdas de la columna 'Transiciones' necesitan dos cadenas separadas por una flecha '-->', del lado izquierdo se encuentra la entrada, y del lado derecho de la flecha se debe poner el estado al cual conduce
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Las celdas de la columna 'Resultados' representan las salidas del estado al que se llega al terminar la transición
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Sobre los tipos de datos
+Los datos son tomados como strings, y aceptan cualquier carácter aceptado por el UTF-8. Se debe tener
+en cuenta que para el correcto funcionamiento de la aplicación
+no deben haber filas sin datos
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Authors
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- [zacwastaken](https://www.github.com/zacwastaken)
+- [KennetSanchez](https://www.github.com/kennetSanchez)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
