@@ -26,6 +26,11 @@ export const InputTable = (
     let hc = 0;
     return (
         <section>
+            <section id="rowButtons">
+                <Button label = {"Añadir fila"} sizeClass = {"medium"} buttonType= {"primary"} selected = {true} onClickFunction={addRow}/>
+                <Button label = {"Eliminar fila"} sizeClass = {"medium"} buttonType= {"danger"} selected = {true} onClickFunction={removeRow}/>
+            </section>
+            
             <div className= {"table"}>
                 <div className={"table__columns"}>
                     <section className={"table__columns__header"}>
@@ -42,10 +47,6 @@ export const InputTable = (
                 </div>
             </div>
 
-            <section id="rowButtons">
-                <Button label = {"Añadir fila"} sizeClass = {"medium"} buttonType= {"primary"} selected = {true} onClickFunction={addRow}/>
-                <Button label = {"Eliminar fila"} sizeClass = {"medium"} buttonType= {"danger"} selected = {true} onClickFunction={removeRow}/>
-            </section>
         </section>
     );
 }

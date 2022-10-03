@@ -224,7 +224,7 @@ export class Minimizer<S, R> {
 
             //Each partition is a new vertex that inherits properties from first vertex of partition
             let symbolicVertex = partition[0];
-            equivalentMooreMachine.addVertex(symbolicVertex.name, symbolicVertex.output);
+            equivalentMooreMachine.addState(symbolicVertex.name, symbolicVertex.output);
 
             //Get old indices of vertices contained within partition
             let indexedPartition : number[] = partition.map(v => index.indexOf(v));
@@ -461,7 +461,7 @@ export class Minimizer<S, R> {
 
             //Each partition is a new vertex that inherits the name of the first vertex of partition
             let symbolicVertex = partition[0];
-            equivalentMealyMachine.addVertex(symbolicVertex);
+            equivalentMealyMachine.addState(symbolicVertex);
 
             //Get old indices of vertices contained within partition
             let indexedPartition : number[] = partition.map(v => index.indexOf(v));
@@ -493,5 +493,4 @@ export class Minimizer<S, R> {
             }
         }
     }
-    
 }

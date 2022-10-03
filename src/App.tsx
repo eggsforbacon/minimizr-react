@@ -1,10 +1,11 @@
 import { NavBar, OutputTable } from './components';
 import { TableLayout } from './layout';
 import { Button } from './components/button';
+import { Minimize } from './scripts/minimize';
 
 
 /* This method takes the input from the input fields in the table. */
-function takeInput(): any []{
+function takeInput(): string[][]{
   let inputSections = document.getElementById("input")?.children;
   let temp = [];
   let i = 0;
@@ -22,33 +23,32 @@ function takeInput(): any []{
     inputsHtml.push(input?.children)
   })
 
-  let states: any [] = []
-  let transitions: any [] = []
-  let results: any [] = []
+  let states: string [] = []
+  let transitions: string [] = []
+  let results: string [] = []
 
   /* This push each input to their array, we get the inputs from each row saved on the inputsHtml array */
-  inputsHtml.forEach(row =>{
+  inputsHtml.forEach(row => {
 
-    
     states.push(row.item(0).value);
     transitions.push(row.item(1).value);
     results.push(row.item(2).value);
-
-  }
-  )
+  });
 
   return [states, transitions, results];
 }
 
 function minimize(tables: JSX.Element ): void{
   let input = takeInput();
-  console.log(input)
-  let machineType = 0
+
+  // 0 if moore, 1 if mealy
+  let machineType = 0;
 
   /* The first button change it's className if the user wants a Mealy machine, so we use the Moore button
    as an indicator of the machine that the user wants to minimize */
   let machineState = document.getElementsByClassName("buttons__wrapper")[0].children.item(0)
-  machineState?.className == "button button__medium button__primary__selected" ? machineType = 0 : machineType = 1
+  machineState?.className == "button button__medium button__primary__selected" ? machineType = 0 : machineType = 1;
+  Minimize.buildAndMinimize(input, machineType);
 }
 
 

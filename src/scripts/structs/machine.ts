@@ -12,11 +12,26 @@ class Moore<S, R> {
         this.size = 0;
     }
 
-    addVertex(name: string, output: R) : [Vertex<R>, number] {
+    addState(name: string, output: R) : [Vertex<R>, number] {
 
         let vertex = new Vertex(name, output);
         this.size = this.index.push(vertex);
 
+        if (this.size === 1) {
+            this.matrix = [[[]]];
+        } else {
+            
+            let i = 0;
+            for (; i < this.matrix.length; i++) {
+                const row = this.matrix[i];
+                row.push([]);
+                console.log(row);
+            }
+            this.matrix.push([]);
+            for (let j = 0; j < this.size; j++) {
+                this.matrix[i].push([]);
+            }
+        }
         return [vertex, this.size];
     }
 
@@ -36,16 +51,16 @@ class Moore<S, R> {
 
     addTransition(from: string, to: string, input: S) : void {
         let row : number = this.index.findIndex(row => row.name === from);
-        let col : number = this.index.findIndex(col => col.name === from);
+        let col : number = this.index.findIndex(col => col.name === to);
         let transitions : S[] = this.matrix[row][col];
-        transitions === null ? transitions = [input] : transitions.push(input);
+        transitions === undefined ? transitions = [input] : transitions.push(input);
     }
 
     removeTransition(from: string, to: string, input: S) : [string, string, S] | undefined {
         let row : number = this.index.findIndex(row => row.name === from);
-        let col : number = this.index.findIndex(col => col.name === from);
+        let col : number = this.index.findIndex(col => col.name === to);
         let transitions : S[] = this.matrix[row][col];
-        if (transitions !== null) {
+        if (transitions !== undefined) {
             let index : number = transitions.indexOf(input);
             return [from, to, transitions.splice(index)[0]];
         }
@@ -53,7 +68,7 @@ class Moore<S, R> {
 
     next(from : Vertex<R>) : Vertex<R>[] {
         let row : S[][] = this.matrix[ this.index.indexOf(from)];
-        let connections : (number | "")[] = row.map((transition, i) => transition.length === 0 || transition === null ? '' : i);
+        let connections : (number | "")[] = row.map((transitions, i) => transitions.length === 0 ? '' : i);
         connections = connections.filter(x => typeof x === 'number');
 
         return this.index.filter(vertex => this.index.indexOf(vertex) in connections);
@@ -65,7 +80,7 @@ class Moore<S, R> {
 
         let adjacentNodes : Vertex<R>[] = this.next(this.index[start]);
         this.index.forEach(vertex => {
-            if (adjacentNodes.find(v => v === vertex) && visited.find(v => v === vertex) === undefined)
+            if (adjacentNodes.find(v => v.equals(vertex)) && visited.find(v => v.equals(vertex)) === undefined)
             visited = this.traverse(this.index.indexOf(vertex), visited);
         });
 
@@ -100,7 +115,7 @@ class Mealy<S, R> {
         this.size = 0;
     }
 
-    addVertex(name: string) : [string, number] {
+    addState(name: string) : [string, number] {
         this.size = this.index.push(name);
         return [name, this.size];
     }
