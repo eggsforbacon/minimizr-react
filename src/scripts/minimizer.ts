@@ -105,7 +105,7 @@ export class Minimizer<S, R> {
                 const partition = partitionK[m];
 
                 // This partition will be trimmed from accordingly and will be added to partitionK1 at the end of each m loop
-                let copyPartition = partition;
+                let copyPartition = partition.map(v => v);
 
                 //Get conditions for Y matching X: 
                 // X and Y are in the same partition in partitionK (for 'k' loop)
@@ -119,7 +119,7 @@ export class Minimizer<S, R> {
                     const successor = successors[j];
                     for (let i = 0; i < partitionK.length; i++) {
                         const partK = partitionK[i];
-                        if (partK.find(x => x.equals(successor))) {
+                        if (partK.find(x => x.equals(successor)) && i !in succeedingPartitions) {
                             succeedingPartitions.push(i);
                             break;
                         }
@@ -128,7 +128,7 @@ export class Minimizer<S, R> {
                 
                 // Put it all together
                 let unexpectedParts : Vertex<R>[][] = []
-                let unexpectedPartsCodes : string[] = [];
+                let unexpectedPartsCodes : string[] = [""];
                 for(let k = 0; k < partition.length; k++) {
                     const vertex = partition[k];
                     let matches : boolean = true;
@@ -148,10 +148,10 @@ export class Minimizer<S, R> {
                             // Found the succesor in partition i, but partition i is not one of the expected succeeding partitions
                             if (found >= 0 && succeedingPartitions.find(n => n === i) === undefined) {
                                 matches = false;
-
+                            }
+                            if (matches === false) {
                                 //Add i to the code symbolizing the new partition
                                 partsCode =  partsCode.includes(""+i) ? partsCode : partsCode + i;
-                                break;
                             }
                         }
 
@@ -162,12 +162,15 @@ export class Minimizer<S, R> {
                         }
                     }
 
-                    if (!(partsCode in unexpectedParts)) {
-                        unexpectedPartsCodes.push(partsCode);
-                        unexpectedParts.push([vertex]);
-                    } else {
-                        unexpectedParts[unexpectedPartsCodes.indexOf(partsCode)].push(vertex);
+                    if(matches === false) {
+                        if (unexpectedPartsCodes.find(s => s === partsCode) === undefined) {
+                            unexpectedPartsCodes.push(partsCode);
+                            unexpectedParts.push([vertex]);
+                        } else {
+                            unexpectedParts[unexpectedPartsCodes.indexOf(partsCode)].push(vertex);
+                        }
                     }
+
                 }
 
                 //Add modified copy of partition within partitionK to partitionK1
@@ -340,7 +343,7 @@ export class Minimizer<S, R> {
                 const partition = partitionK[m];
 
                 // This partition will be trimmed from accordingly and will be added to partitionK1 at the end of each m loop
-                let copyPartition = partition;
+                let copyPartition = partition.map(s => s);
 
                 //Get conditions for Y matching X: 
                 // X and Y are in the same partition in partitionK (for 'k' loop)

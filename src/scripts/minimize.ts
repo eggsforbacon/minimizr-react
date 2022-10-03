@@ -12,7 +12,7 @@ export class Minimize {
      * RESULTS: ["1", "0", "0", ...] 
      * !!! ONE ENTRY PER TRANSITION IN ALL ARRAYS !!!*/
     
-    static buildAndMinimize(rawInput: string[][], machineType : number) {
+    static buildAndMinimize(rawInput: string[][], machineType : number) : string[][] {
         const [STATES, TRANSITIONS, RESULTS] : string[][] = rawInput;
         
         // Build machine from input
@@ -21,6 +21,42 @@ export class Minimize {
         const minimizer : Minimizer<string, string> = new Minimizer<string,string>(builtMachine);
         let minimizedMachine = minimizer.minimize();
         console.log(minimizedMachine.getMatrix());
+        let [tStates, tTransitions, tResults] = this.translateMachine(minimizedMachine, machineType);
+        return [tStates, tTransitions, tResults];
+    }
+
+    static translateMachine(minimizedMachine: Moore<string, string> | Mealy<string, string>, machineType: number): [string[], string[], string[]] {
+
+        let states : string[]
+        let transitions : string[] 
+        let results : string[] 
+
+        if (machineType === 0) {
+            minimizedMachine = minimizedMachine as Moore<string, string>;
+
+            states = minimizedMachine.getIndex().map(v => v.name + STATE_OUTPUT_SEPARATOR + v.output);
+            transitions = [];
+            results = [];
+
+            for (let x = 0; x < minimizedMachine.getMatrix().length; x++) {
+                const row = minimizedMachine.getMatrix()[x];
+                for (let y = 0; y < row.length; y++) {
+                    const col = row[y];
+                    
+                }
+                
+            }
+        } else {
+            minimizedMachine = minimizedMachine as Mealy<string, string>;
+
+            states = minimizedMachine.getIndex().map(v => v);
+            transitions = [];
+            results = [];
+        }
+
+
+        return [states, transitions, results];
+
     }
 
     private static buildMoore(states: string[], transitions: string[], results: string[]) : Moore<string, string> {

@@ -52,7 +52,7 @@ function minimize(tables: JSX.Element ): void{
    as an indicator of the machine that the user wants to minimize */
   let machineState = document.getElementsByClassName("buttons__wrapper")[0].children.item(0)
   machineState?.className == "button button__medium button__primary__selected" ? machineType = 0 : machineType = 1;
-  
+  Minimize.buildAndMinimize(input, machineType);
 }
 
 function App() {

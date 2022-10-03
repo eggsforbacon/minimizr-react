@@ -71,7 +71,11 @@ class Moore<S, R> {
         let connections : (number | "")[] = row.map((transitions, i) => transitions.length === 0 ? '' : i);
         connections = connections.filter(x => typeof x === 'number');
 
-        return this.index.filter(vertex => this.index.indexOf(vertex) in connections);
+        let successors : Vertex<R>[] = [];
+        connections.forEach(i => {
+            successors.push(this.index[i as number]);
+        });
+        return successors;
     }
 
     traverse(start: number, visited: Vertex<R>[]) : Vertex<R>[] {
